@@ -227,3 +227,43 @@ Create Availability Set:
 * Fault Domains: **Max (3)**
 * Update Domains: **Max (20)**
 * Use Managed Disks: **Yes**
+
+## Virtual Machines
+
+### Notes On VM Sizes
+
+General Purpose:
+> These VMs have a balanced CPU-to-Memory ratio.
+> Use for general workloads such as the Cloudera Manager and Master nodes.
+* B, Dsv3, Dv3, DSv2, Av2
+* Details @ [Microsoft](https://docs.microsoft.com/en-us/azure/virtual-machines/windows/sizes-general)
+
+For Compute:
+> These VMs have a high CPU-to-Memory ratio.
+> Use for compute heavy roles such as Machine Learning.
+* Fsv2, Fs, F
+* Details @ [Microsoft](https://docs.microsoft.com/en-us/azure/virtual-machines/windows/sizes-compute)
+
+For Memory:
+> These VMs have a high Memory-to-CPU ratio.
+> Use for batch processing roles with high memory needs.
+* Esv3, Ev3, M, GS, G, DSv2, Dv2
+* Details @ [Microsoft](https://docs.microsoft.com/en-us/azure/virtual-machines/windows/sizes-memory)
+
+For Storage:
+> These VMs offer high disk throughput.
+> Use for IO bound roles such as databases and importing and exporting files.
+* LS
+* Details @ [Microsoft](https://docs.microsoft.com/en-us/azure/virtual-machines/windows/sizes-storage)
+
+For GPU Use:
+> These series boast powerful NVIDIA discrete GPUs.
+> Use for specialized workloads such as GPU-optimized machine learning.
+* NC, NCv2, NCv3, ND, NV
+* Details @ [Microsoft](https://docs.microsoft.com/en-us/azure/virtual-machines/windows/sizes-gpu)
+
+For High-Performance Compute:
+> These series boast the most powerful CPU, Memory, Disk and Network specifications.
+> Use for high-end scientific workloads such as molecular modeling and fluid dynamics.
+* H
+* Details @ [Microsoft](https://docs.microsoft.com/en-us/azure/virtual-machines/windows/sizes-hpc)
