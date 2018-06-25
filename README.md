@@ -37,26 +37,41 @@ Create Virtual Network **ClouderaOnAzure-VirtualNetwork**:
    * Name: **ClouderaOnAzure-SubNet-WorkerNodes**
    * Address Space: **10.0.3.0/24**
 
-Useful: [Azure ExpressRoute](https://azure.microsoft.com/en-us/services/expressroute/)
+Good-To-Know: [Azure ExpressRoute](https://azure.microsoft.com/en-us/services/expressroute/)
 
 ## Network Security Groups
 
-1. Create Network Security Group
+### For Cloudera Manager
+
+Create Network Security Group:
+
    * Name: **ClouderaOnAzure-NetworkSecurityGroup-ClouderaManager**
    * Subscription: Same as Resource Group
    * Resource Group: **ClouderaOnAzure**
    * Location: Same as Data Lake Store
-2. Create Network Security Group
+
+### For Master Nodes
+
+Create Network Security Group:
+
    * Name: **ClouderaOnAzure-NetworkSecurityGroup-MasterNodes**
    * Subscription: Same as Resource Group
    * Resource Group: **ClouderaOnAzure**
    * Location: Same as Data Lake Store
-3. Create Network Security Group
+
+### For Edge Nodes
+
+Create Network Security Group:
+
    * Name: **ClouderaOnAzure-NetworkSecurityGroup-EdgeNodes**
    * Subscription: Same as Resource Group
    * Resource Group: **ClouderaOnAzure**
    * Location: Same as Data Lake Store
-4. Create Network Security Group
+
+### For Worker Nodes
+
+Create Network Security Group:
+
    * Name: **ClouderaOnAzure-NetworkSecurityGroup-WorkerNodes**
    * Subscription: Same as Resource Group
    * Resource Group: **ClouderaOnAzure**
