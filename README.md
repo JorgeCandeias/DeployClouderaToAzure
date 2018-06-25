@@ -171,3 +171,59 @@ Create Network Security Group:
 1. Open *Network Security Group*
 1. Select Network Security Group **ClouderaOnAzure-NetworkSecurityGroup-WorkerNodes**
 1. Save & Close Blade
+
+## Availability Sets
+
+> Microsoft and Cloudera recomendations for High Availability:
+> * Place machines with the same Role in the same Availability Set.
+> * Use a distinct Availability Set per Role.
+> * If more than 3 VMs in a single Availability Group then associate each VM
+with Azure assigned Fault Domain or Update Domain.
+
+### For Cloudera Manager Nodes
+
+Create Availability Set:
+
+* Name: **ClouderaOnAzure-AvailabilitySet-ClouderaManager**
+* Subscription: Same as Resource Group
+* Resource Group: **ClouderaOnAzure**
+* Location: Same as Data Lake Store
+* Fault Domains: **Max (3)**
+* Update Domains: **Max (20)**
+* Use Managed Disks: **Yes**
+
+### For Master Nodes
+
+Create Availability Set:
+
+* Name: **ClouderaOnAzure-AvailabilitySet-MasterNodes**
+* Subscription: Same as Resource Group
+* Resource Group: **ClouderaOnAzure**
+* Location: Same as Data Lake Store
+* Fault Domains: **Max (3)**
+* Update Domains: **Max (20)**
+* Use Managed Disks: **Yes**
+
+### For Edge Nodes
+
+Create Availability Set:
+
+* Name: **ClouderaOnAzure-AvailabilitySet-EdgeNodes**
+* Subscription: Same as Resource Group
+* Resource Group: **ClouderaOnAzure**
+* Location: Same as Data Lake Store
+* Fault Domains: **Max (3)**
+* Update Domains: **Max (20)**
+* Use Managed Disks: **Yes**
+
+### For Worker Nodes
+
+Create Availability Set:
+
+* Name: **ClouderaOnAzure-AvailabilitySet-WorkerNodes**
+* Subscription: Same as Resource Group
+* Resource Group: **ClouderaOnAzure**
+* Location: Same as Data Lake Store
+* Fault Domains: **Max (3)**
+* Update Domains: **Max (20)**
+* Use Managed Disks: **Yes**
