@@ -267,3 +267,23 @@ For High-Performance Compute:
 > Use for high-end scientific workloads such as molecular modeling and fluid dynamics.
 * H
 * Details @ [Microsoft](https://docs.microsoft.com/en-us/azure/virtual-machines/windows/sizes-hpc)
+
+### Create DNS Entry-Point Virtual Machine
+
+Notes:
+
+* [Cloudera Supported Operating Systems](https://www.cloudera.com/documentation/enterprise/release-notes/topics/rn_consolidated_pcm.html#cdh_cm_supported_os)
+* [How to create an SSH public-private key pair on Linux or MacOS](https://docs.microsoft.com/en-us/azure/virtual-machines/linux/mac-create-ssh-keys)
+* [How to create an SSH public-private key pair on Windows](https://docs.microsoft.com/en-us/azure/virtual-machines/linux/ssh-from-windows)
+
+Create Virtual Machine:
+
+* Type: **Cloudera CentOS 7.4** (at time of writing - choose a newer one if available)
+* Basics:
+  * Name: **Cloudera-DNS**
+  * Username: **cloudera**
+  * Authentication Type: **SSH Public Key**
+  * SSH Public Key: *Your Public Key*
+  * Subscription: *Same as Resource Group*
+  * Resource Group: **ClouderaOnAzure**
+* Size: **DS1_v2 Standard**
