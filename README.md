@@ -2,8 +2,8 @@
 
 ## Data Lake Store
 
-1. Search for the **Data Lake Store** service and note the locations it is available on.
-2. Determine the best option for your deployment.
+1. Lookup **Data Lake Store** on [Azure Products by Region](https://azure.microsoft.com/en-us/global-infrastructure/services/) and note location availability.
+2. Determine the best location for your deployment. All primary resources will reside in the same location for optimal performance.
 
 ## Resource Group
 
@@ -287,3 +287,16 @@ Create Virtual Machine:
   * Subscription: *Same as Resource Group*
   * Resource Group: **ClouderaOnAzure**
 * Size: **DS1_v2 Standard**
+
+## Azure Data Lake Store
+
+Create Data Lake Store:
+* Name: **clouderadls123**
+  * Note: The name must be unique across Azure. The above name is only for guide purposes. You will have to choose your own unique name.
+* Subscription: *Same as Resource Group*
+* Resource Group: **ClouderaOnAzure**
+* Location: *As chosen in the beginning of this guide*
+* Pricing Package:
+  * Use **Pay-as-you-go** for testing deployments when you don't yet know resource requirements. Probably as you are doing right now.
+  * Use **Monthly commitment** for cost savings when you know resource requirements up-front.
+* Encryption Settings: **Enabled** (Default)
