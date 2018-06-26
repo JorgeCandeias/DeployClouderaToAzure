@@ -268,7 +268,7 @@ For High-Performance Compute:
 * H
 * Details @ [Microsoft](https://docs.microsoft.com/en-us/azure/virtual-machines/windows/sizes-hpc)
 
-### Create DNS Entry-Point Virtual Machine
+### DNS Entry-Point Virtual Machine
 
 Notes:
 
@@ -300,3 +300,38 @@ Create Data Lake Store:
   * Use **Pay-as-you-go** for testing deployments when you don't yet know resource requirements. Probably as you are doing right now.
   * Use **Monthly commitment** for cost savings when you know resource requirements up-front.
 * Encryption Settings: **Enabled** (Default)
+
+## Dynamic DNS
+
+Notes:
+
+* CDH requires both forward and reverse Dynamic DNS for internal services.
+* However, at this time, reverse Dynamic DNS support in Azure is not adequate.
+* The steps below detail how to setup a custom Dynamic DNS Server using [BIND](https://www.isc.org/downloads/bind/).
+* You can also read the [Cloudera documentation](https://www.cloudera.com/documentation/director/latest/topics/director_get_started_azure_ddns.html) for detailed information.
+* These instructions use the [Cloudera Azure DNS Scripts](https://github.com/cloudera/director-scripts/tree/master/azure-dns-scripts) at GitHub to speed things up. However, only use these scripts if making a short-lived test deployment. For permanent production deployments, take time to understand what the detailed steps imply and create your own custom deployment scripts.
+
+Todo:
+
+* Open VM **Cloudera-DNS**
+* Note the **Public IP Address**
+* Login to **Cloudera-DNS** from your SSH client using the **Public IP Address**.
+  * E.g. in Linux Bash run ```ssh cloudera@xxx.xxx.xxx.xxx``` where the mask is your VM's IP address.
+  * The above assumes you created the SSH Key Pair as detailed in this guide.
+* Open the [raw content](https://raw.githubusercontent.com/cloudera/director-scripts/master/azure-dns-scripts/bind-dns-setup.sh) for the **bind-dns-setup.sh** script on the [Cloudera Azure DNS Scripts](https://github.com/cloudera/director-scripts/tree/master/azure-dns-scripts) GitHub page.
+* Note the url for the raw code.
+* On the VM console:
+  * Run
+```wget https://raw.githubusercontent.com/cloudera/director-scripts/master/azure-dns-scripts/bind-dns-setup.sh``` where the url is the correct raw url for the **bind-dns-setup.sh** file.
+  * Run ```chmod +x bind-dns-setup.sh``` to make the script executable.
+  * Run ```sudo ./bind-dns-setup.sh``` to execute the script.
+    * Note the warning message! If you already setup a BIND server on the cluster, do not proceed with the script. This guide assumes this is your first and only DNS server. Accept if so.
+    * Enter internal host FQDN suffix: **cloudera**
+    * When the script promps you to go to Azure, take note of the private IP address for the host, for example **10.0.0.4**. Do not proceed with the script yet.
+* On Azure, open Virtual Network **ClouderaOnAzure-VirtualNetwork**.
+  * Open tab **DNS Servers**.
+  * Select **Custom**.
+  * Enter the private IP address for the DNS host, for example **10.0.0.4**.
+  * Save.
+* On the VM console:
+  * Press Enter to complete the setup.
