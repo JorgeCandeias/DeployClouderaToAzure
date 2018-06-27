@@ -1,4 +1,22 @@
-# Deploying Cloudera To Azure Step-By-Step
+# Deploying Cloudera To Azure Step-By-Step IaaS DIY
+
+## Introduction
+
+This step-by-step guide details how to deploy a sample Cloudera CDH reference cluster to Microsoft Azure IaaS using a Do-It-Yourself process.
+
+The purpose of this guide is to support trainee Data Engineers in getting their first reference Azure cluster up and running fast while gaining awareness of all the distinct moving parts in the deployment of the cluster.
+
+For enterprise-grade production deployments and management needs there are more efficient approaches, such as using [Cloudera Director](https://www.cloudera.com/products/product-components/cloudera-director.html).
+
+General Notes:
+
+* [Supported Configurations with Virtualization and Cloud Platforms](https://www.cloudera.com/documentation/enterprise/release-notes/topics/rn_consolidated_pcm.html#virtual_platforms)
+* [Cloudera Enterprise Reference Architecture for Azure Deployments](https://www.cloudera.com/documentation/other/reference-architecture/PDF/cloudera_ref_arch_azure.pdf)
+* [Support Limitations for CDH and Cloudera Manager in Microsoft Azure](https://www.cloudera.com/documentation/enterprise/release-notes/topics/rn_consolidated_pcm.html#concept_y5l_43m_bbb)
+
+For Funsies:
+* [Cloudera Enterprise Reference Architecture for AWS Deployments](http://www.cloudera.com/content/cloudera/en/documentation/reference-architecture/latest/PDF/cloudera_ref_arch_aws.pdf)
+* [Cloudera Enterprise Reference Architecture for Google Cloud Platform Deployments](http://www.cloudera.com/content/www/en-us/documentation/other/reference-architecture/PDF/cloudera_ref_arch_gcp.pdf)
 
 ## Data Lake Store
 
@@ -335,3 +353,14 @@ Todo:
   * Save.
 * On the VM console:
   * Press Enter to complete the setup.
+
+## Databases
+
+Notes:
+
+* [CDH and Cloudera Manager Supported Databases](https://www.cloudera.com/documentation/enterprise/release-notes/topics/rn_consolidated_pcm.html#cdh_cm_supported_db)
+* [Supported Software and Distributions](https://www.cloudera.com/documentation/director/latest/topics/director_deployment_requirements.html#concept_fhh_ygd_nt)
+
+Todo:
+
+* This guide uses MySql because you have to pick something.
