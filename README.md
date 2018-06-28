@@ -360,7 +360,32 @@ Notes:
 
 * [CDH and Cloudera Manager Supported Databases](https://www.cloudera.com/documentation/enterprise/release-notes/topics/rn_consolidated_pcm.html#cdh_cm_supported_db)
 * [Supported Software and Distributions](https://www.cloudera.com/documentation/director/latest/topics/director_deployment_requirements.html#concept_fhh_ygd_nt)
-
-Todo:
-
+* [Installing MySQL Server](https://www.cloudera.com/documentation/enterprise/latest/topics/cm_ig_mysql.html#cmig_topic_5_5_1)
 * This guide uses MySql because you have to pick something.
+
+Create Virtual Machine:
+* Type: **Cloudera CentOS 7.4** (at time of writing - choose a newer one if available)
+* Basics:
+  * Name: **Cloudera-DNS**
+  * VM Disk Type: **SSD**
+  * Username: **cloudera**
+  * Authentication Type: **SSH Public Key**
+  * SSH Public Key: *Your Public Key*
+  * Subscription: *Same as Resource Group*
+  * Resource Group: **ClouderaOnAzure**
+* Size: General Purpose / Min 7GB RAM
+* Settings:
+  * Availability Set: **ClouderaOnAzure-AvailabilitySet-ClouderaManager**
+  * Use Managed Disks: **Yes**
+  * Virtual Network: **ClouderaOnAzure-VirtualNetwork**
+  * Subnet: **ClouderaOnAzure-SubNet-ClouderaManager**
+  * Public IP Address: **None**
+  * Network Security Group: **Advanced**
+  * Network Security Group (Firewall): **ClouderaOnAzure-NetworkSecurityGroup-ClouderaManager**
+
+Install MySQL Server:
+
+> These steps just follow the Cloudera documentation linked above.
+
+* Connect to **Cloudera-DNS** via your SSH client.
+* From **Cloudera-DNS** connect to **Cloudera-MySQL** via Linux SSH.
