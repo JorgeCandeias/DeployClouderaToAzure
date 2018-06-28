@@ -304,7 +304,15 @@ Create Virtual Machine:
   * SSH Public Key: *Your Public Key*
   * Subscription: *Same as Resource Group*
   * Resource Group: **ClouderaOnAzure**
-* Size: **DS1_v2 Standard**
+* Size: General Purpose / MIN 3.5GB RAM
+* Settings:
+  * Availability Set: **ClouderaOnAzure-AvailabilitySet-ClouderaManager**
+  * Use Managed Disks: **Yes**
+  * Virtual Network: **ClouderaOnAzure-VirtualNetwork**
+  * Subnet: **ClouderaOnAzure-SubNet-ClouderaManager**
+  * Public IP Address: Default (New)
+  * Network Security Group: **Advanced**
+  * Network Security Group (Firewall): **ClouderaOnAzure-NetworkSecurityGroup-ClouderaManager**
 
 ## Azure Data Lake Store
 
@@ -329,7 +337,7 @@ Notes:
 * You can also read the [Cloudera documentation](https://www.cloudera.com/documentation/director/latest/topics/director_get_started_azure_ddns.html) for detailed information.
 * These instructions use the [Cloudera Azure DNS Scripts](https://github.com/cloudera/director-scripts/tree/master/azure-dns-scripts) at GitHub to speed things up. However, only use these scripts if making a short-lived test deployment. For permanent production deployments, take time to understand what the detailed steps imply and create your own custom deployment scripts.
 
-Todo:
+Install BIND:
 
 * Open VM **Cloudera-DNS**
 * Note the **Public IP Address**
@@ -361,17 +369,19 @@ Notes:
 * [CDH and Cloudera Manager Supported Databases](https://www.cloudera.com/documentation/enterprise/release-notes/topics/rn_consolidated_pcm.html#cdh_cm_supported_db)
 * [Supported Software and Distributions](https://www.cloudera.com/documentation/director/latest/topics/director_deployment_requirements.html#concept_fhh_ygd_nt)
 * [Installing MySQL Server](https://www.cloudera.com/documentation/enterprise/latest/topics/cm_ig_mysql.html#cmig_topic_5_5_1)
-* This guide uses MySql because you have to pick something.
+* This guide uses MySQL for demonstration purposes.
+* [Azure Database for MySQL](https://azure.microsoft.com/en-us/pricing/details/mysql/) is a new PaaS MySQL database offering in Azure. However Cloudera has not yet announced official support at the time of writing this guide. Feel free to use it instead if this has changed in the meantime.
 
 Create Virtual Machine:
+
 * Type: **Cloudera CentOS 7.4** (at time of writing - choose a newer one if available)
 * Basics:
   * Name: **Cloudera-DNS**
   * VM Disk Type: **SSD**
   * Username: **cloudera**
   * Authentication Type: **SSH Public Key**
-  * SSH Public Key: *Your Public Key*
-  * Subscription: *Same as Resource Group*
+  * SSH Public Key: Your SSH Public Key
+  * Subscription: Same as Resource Group
   * Resource Group: **ClouderaOnAzure**
 * Size: General Purpose / Min 7GB RAM
 * Settings:
@@ -379,7 +389,7 @@ Create Virtual Machine:
   * Use Managed Disks: **Yes**
   * Virtual Network: **ClouderaOnAzure-VirtualNetwork**
   * Subnet: **ClouderaOnAzure-SubNet-ClouderaManager**
-  * Public IP Address: **None**
+  * Public IP Address: Default (New)
   * Network Security Group: **Advanced**
   * Network Security Group (Firewall): **ClouderaOnAzure-NetworkSecurityGroup-ClouderaManager**
 
@@ -387,5 +397,12 @@ Install MySQL Server:
 
 > These steps just follow the Cloudera documentation linked above.
 
-* Connect to **Cloudera-DNS** via your SSH client.
-* From **Cloudera-DNS** connect to **Cloudera-MySQL** via Linux SSH.
+* Connect to **Cloudera-MySQL** via your SSH client.
+* On the VM Console run:
+  * ```wget http://repo.mysql.com/mysql-community-release-el7-5.noarch.rpm```
+  * ```sudo rpm -ivh mysql-community-release-el7-5.noarch.rpm```
+  * ```sudo yum update```
+  * ```sudo yum install mysql-server```
+  * ```sudo systemctl start mysqld```
+  * ```systemctl status mysqld```
+  * Ensure status shown by previous step is "active (running)".
