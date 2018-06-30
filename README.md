@@ -98,9 +98,10 @@ Create Network Security Group:
 
 ## SSH Inbound Security Rules
 
-> Attention: The steps below will expose SSH port 22 to the internet.
-> Therefore, only use this for testing temporary environments.
-> For production environments, use a VPN or private connection instead.
+> **Attention**: The steps below will expose SSH port 22 to the internet.
+> This is a simple way to access your temporary VMs in the comfort of your home, while studying this guide.
+> However, this opens an attack surface on your cluster.
+> For long-lived corporate environments, make sure to use a private connection as described in the [Azure Virtual Networks Overview](https://docs.microsoft.com/en-us/azure/virtual-network/virtual-networks-overview#communicate-with-on-premises-resources).
 
 ### For Cloudera Manager Nodes
 
