@@ -1,6 +1,6 @@
 # Deploying Cloudera To Azure Step-By-Step IaaS DIY
 
-## Introduction
+## Overview
 
 This step-by-step guide details how to deploy a sample Cloudera CDH reference cluster to Microsoft Azure IaaS using a Do-It-Yourself process.
 
@@ -17,6 +17,7 @@ General Notes:
 For Funsies:
 * [Cloudera Enterprise Reference Architecture for AWS Deployments](http://www.cloudera.com/content/cloudera/en/documentation/reference-architecture/latest/PDF/cloudera_ref_arch_aws.pdf)
 * [Cloudera Enterprise Reference Architecture for Google Cloud Platform Deployments](http://www.cloudera.com/content/www/en-us/documentation/other/reference-architecture/PDF/cloudera_ref_arch_gcp.pdf)
+* This guide uses the Cloudera-built Azure CentOS Linux images for the VMs. You can use any supported non-Cloudera Linux distribution instead, however you must bootstrap such machines with the [Azure Bootstrap Scripts](https://github.com/cloudera/director-scripts/tree/master/azure-bootstrap-scripts) to make them Cloudera-compatible.
 
 ## Data Lake Store
 
