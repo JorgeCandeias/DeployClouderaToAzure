@@ -2,11 +2,13 @@
 
 ## Overview
 
-This step-by-step guide details how to deploy a sample Cloudera CDH reference cluster to Microsoft Azure IaaS using a Do-It-Yourself process.
+This step-by-step guide details **one way** to deploy a sample Cloudera CDH reference cluster to Microsoft Azure IaaS using a Do-It-Yourself process.
 
-The purpose of this guide is to support trainee Data Engineers in getting their first reference Azure cluster up and running fast while gaining awareness of all the distinct moving parts in the deployment of the cluster.
+The purpose of this guide is to assist studying Data Engineers getting their first Azure enterprise cluster up and running fast while gaining awareness of the distinct moving parts in the deployment of the cluster.
 
-For enterprise-grade production deployments and management needs there are more efficient approaches, such as using [Cloudera Director](https://www.cloudera.com/products/product-components/cloudera-director.html).
+It is therefore a mix of *Path A* and *Path B* from the offical installation manuals, with *some* automation along the way, and it is time-consuming.
+
+For enterprise-grade production deployments and management needs, there are far more efficient approaches, such as using [Cloudera Director](https://www.cloudera.com/products/product-components/cloudera-director.html) or [Cloudera Altus](https://www.cloudera.com/products/altus.html) from the start.
 
 General Notes:
 
@@ -18,6 +20,10 @@ For Funsies:
 * [Cloudera Enterprise Reference Architecture for AWS Deployments](http://www.cloudera.com/content/cloudera/en/documentation/reference-architecture/latest/PDF/cloudera_ref_arch_aws.pdf)
 * [Cloudera Enterprise Reference Architecture for Google Cloud Platform Deployments](http://www.cloudera.com/content/www/en-us/documentation/other/reference-architecture/PDF/cloudera_ref_arch_gcp.pdf)
 * This guide uses the Cloudera-built Azure CentOS Linux images for the VMs. You can use any supported non-Cloudera Linux distribution instead, however you must bootstrap such machines with the [Azure Bootstrap Scripts](https://github.com/cloudera/director-scripts/tree/master/azure-bootstrap-scripts) to make them Cloudera-compatible.
+
+## ***TODO: Add Azure introduction here***
+
+Todo: Add Azure specific pointers for relevant services.
 
 ## Data Lake Store
 
@@ -364,9 +370,9 @@ Install BIND:
 * On the VM console:
   * Press Enter to complete the setup.
 
-## Databases
+## Configuration Database
 
-Notes:
+### Notes:
 
 * [CDH and Cloudera Manager Supported Databases](https://www.cloudera.com/documentation/enterprise/release-notes/topics/rn_consolidated_pcm.html#cdh_cm_supported_db)
 * [Supported Software and Distributions](https://www.cloudera.com/documentation/director/latest/topics/director_deployment_requirements.html#concept_fhh_ygd_nt)
@@ -374,7 +380,7 @@ Notes:
 * This guide uses MySQL for demonstration purposes.
 * [Azure Database for MySQL](https://azure.microsoft.com/en-us/pricing/details/mysql/) is a new PaaS MySQL database offering in Azure. However Cloudera has not yet announced official support at the time of writing this guide. Feel free to use it instead if this has changed in the meantime.
 
-Create Virtual Machine:
+### Create Virtual Machine:
 
 * Type: **Cloudera CentOS 7.4** (at time of writing - choose a newer one if available)
 * Basics:
@@ -395,7 +401,7 @@ Create Virtual Machine:
   * Network Security Group: **Advanced**
   * Network Security Group (Firewall): **ClouderaOnAzure-NetworkSecurityGroup-ClouderaManager**
 
-Install MySQL Server:
+### Install MySQL Server:
 
 > These steps just follow the Cloudera documentation linked above.
 
@@ -408,3 +414,38 @@ Install MySQL Server:
   * ```sudo systemctl start mysqld```
   * ```systemctl status mysqld```
   * Ensure status shown by previous step is "active (running)".
+
+### Configure MySQL Server Service:
+
+> These steps just follow the Cloudera documentation on [Configuring and Starting the MySQL Server](https://www.cloudera.com/documentation/enterprise/latest/topics/cm_ig_mysql.html)
+
+* Connect to **Cloudera-MySQL** via your SSH client.
+* Enter ```systemctl status mysqld``` to check the status of the service.
+* If the service is running, enter ```sudo systemctl stop mysqld``` to stop the service.
+* Enter ```cat /etc/my.cnf``` to examine the current MySQL configuration file. You will replace this configuration file with the one provided by Cloudera. Therefore, it is a good idea to back it up.
+* Enter ```sudo cp /etc/my.cnf /etc/my.cnf.backup``` to backup the current configuration file.
+* Enter ```sudo truncate --size 0 /etc/my.cnf``` to clear the configuration file.
+* Enter ```sudo nano /etc/my.cnf``` to edit the configuration file (will now be empty).
+* On your own machine, go to the documentation page linked above and copy the content for the *option file with Cloudera recommended settings*.
+* Back to the VM, paste the content into the nano editor.
+* Type **Control-X** then **Y** then **Enter** to save your changes and exit nano.
+* Enter ```cat /etc/my.cnf``` to verify that your changes were applied.
+* Enter ```sudo systemctl start mysqld``` to start MySQL service.
+* Enter ```systemctl status mysqld``` and ensure the MySQL service is now active and running. If the service did not start, restore the backup configuration file and try to start it again. If it now works, go through the above instructions again. You can also run ```sudo cat /var/log/mysqld.log``` to see if MySQL generated any helpful error logs.
+
+### Configure MySQL Secure Authentication
+
+Enter ```/usr/bin/mysql_secure_installation``` to start the secure installation script for MySQL. Use the following options:
+* **Root Password prompt**: Leave blank and hit **Enter**. You have just installed MySQL Server so you there isn't one yet.
+ * **Set Root Password**: **Y**.
+ * **MySQL Root Password**: Choose your new *MySQL root password*. Do use a strong password as database root access is a common attack vector.
+ * **Remove Anonymous Users**: **Y**.
+ * **Disallow Root Login Remotely**: **N**.
+ * **Remove Test Database**: **Y**. Ignore any errors here.
+ * **Reload Priviledge Tables**: **Y**.
+
+ ### Install MySQL JDBC Driver
+
+ > Note: You must apply this step in every single cluster that requires direct configuration database access.
+
+ 
