@@ -448,4 +448,14 @@ Enter ```/usr/bin/mysql_secure_installation``` to start the secure installation 
 
  > Note: You must apply this step in every single cluster that requires direct configuration database access.
 
- 
+On your own machine:
+ * Go to the [MySQL Connector/J download page](https://dev.mysql.com/downloads/connector/j/5.1.html) and try to download the tar.gz files.
+ * On the confirmation page, locate the *no thanks, just start my dowload* link and copy it.
+
+On **Cloudera-MySQL**:
+ * Enter ```wget``` plus the download link you just copied, e.g. ```wget https://dev.mysql.com/get/Downloads/Connector-J/mysql-connector-java-5.1.46.tar.gz```
+   * If you get a DNS resolution error, ensure the VM **Cloudera-DNS** is active.
+* Enter ```tar zxvf mysql-connector-java-5.1.46.tar.gz``` (or the equivalent for your file name) to extract the driver files.
+* Enter ```sudo mkdir -p /usr/share/java/``` to make a new shared folder for the driver.
+* Enter ```cd mysql-connector-java-5.1.46``` to move into the extracted driver folder.
+* Enter ```sudo cp mysql-connector-java-5.1.46-bin.jar /usr/share/java/mysql-connector-java.jar``` to copy the downloaded driver to the shared driver folder.
