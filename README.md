@@ -459,3 +459,48 @@ On **Cloudera-MySQL**:
 * Enter ```sudo mkdir -p /usr/share/java/``` to make a new shared folder for the driver.
 * Enter ```cd mysql-connector-java-5.1.46``` to move into the extracted driver folder.
 * Enter ```sudo cp mysql-connector-java-5.1.46-bin.jar /usr/share/java/mysql-connector-java.jar``` to copy the downloaded driver to the shared driver folder.
+
+### Create Databases for Cloudera Software
+
+On **Cloudera-MySQL**:
+  * Enter ```mysql -u root -p``` to log on to the MySQL command prompt.
+  * Enter your MySQL password.
+
+For Cloudera Manager Server:
+  * ```CREATE DATABASE scm DEFAULT CHARACTER SET utf8 DEFAULT COLLATE utf8_general_ci;```
+  * ```GRANT ALL ON scm.* TO 'scm_user'@'%' IDENTIFIED BY 'scm_password';```
+
+For Activity Monitor:
+  * ```CREATE DATABASE amon DEFAULT CHARACTER SET utf8 DEFAULT COLLATE utf8_general_ci;```
+  * ```GRANT ALL ON amon.* TO 'amon_user'@'%' IDENTIFIED BY 'amon_password';```
+
+For Reports Manager:
+  * ```CREATE DATABASE rman DEFAULT CHARACTER SET utf8 DEFAULT COLLATE utf8_general_ci;```
+  * ```GRANT ALL ON rman.* TO 'rman_user'@'%' IDENTIFIED BY 'rman_password';```
+
+For Hue:
+  * ```CREATE DATABASE hue DEFAULT CHARACTER SET utf8 DEFAULT COLLATE utf8_general_ci;```
+  * ```GRANT ALL ON hue.* TO 'hue_user'@'%' IDENTIFIED BY 'hue_password';```
+
+For Hive Metastore Server:
+  * ```CREATE DATABASE metastore DEFAULT CHARACTER SET utf8 DEFAULT COLLATE utf8_general_ci;```
+  * ```GRANT ALL ON metastore.* TO 'hive_user'@'%' IDENTIFIED BY 'hive_password';```
+
+For Sentry Server:
+  * ```CREATE DATABASE sentry DEFAULT CHARACTER SET utf8 DEFAULT COLLATE utf8_general_ci;```
+  * ```GRANT ALL ON sentry.* TO 'sentry_user'@'%' IDENTIFIED BY 'sentry_password';```
+
+For Cloudera Navigator Audit Server:
+  * ```CREATE DATABASE nav DEFAULT CHARACTER SET utf8 DEFAULT COLLATE utf8_general_ci;```
+  * ```GRANT ALL ON nav.* TO 'nav_user'@'%' IDENTIFIED BY 'nav_password';```
+
+For Cloudera Navigator Metadata Server:
+  * ```CREATE DATABASE navms DEFAULT CHARACTER SET utf8 DEFAULT COLLATE utf8_general_ci;```
+  * ```GRANT ALL ON navms.* TO 'navms_user'@'%' IDENTIFIED BY 'navms_password';```
+
+For Oozie:
+  * ```CREATE DATABASE oozie DEFAULT CHARACTER SET utf8 DEFAULT COLLATE utf8_general_ci;```
+  * ```GRANT ALL ON oozie.* TO 'oozie_user'@'%' IDENTIFIED BY 'oozie_password';```
+
+Check all databases:
+  * ```SHOW DATABASES;```
