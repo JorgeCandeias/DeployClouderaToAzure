@@ -463,44 +463,92 @@ On **Cloudera-MySQL**:
 ### Create Databases for Cloudera Software
 
 On **Cloudera-MySQL**:
-  * Enter ```mysql -u root -p``` to log on to the MySQL command prompt.
+  * Log on to the MySQL command prompt:
+    ```bash
+    mysql -u root -p
+    ```
   * Enter your MySQL password.
 
 For Cloudera Manager Server:
-  * ```CREATE DATABASE scm DEFAULT CHARACTER SET utf8 DEFAULT COLLATE utf8_general_ci;```
-  * ```GRANT ALL ON scm.* TO 'scm_user'@'%' IDENTIFIED BY 'scm_password';```
+  * ```sql
+    CREATE DATABASE scm DEFAULT CHARACTER SET utf8 DEFAULT COLLATE utf8_general_ci;
+    ```
+  * ```sql
+    GRANT ALL ON scm.* TO 'scm_user'@'%' IDENTIFIED BY 'scm_password';
+    ```
 
 For Activity Monitor:
-  * ```CREATE DATABASE amon DEFAULT CHARACTER SET utf8 DEFAULT COLLATE utf8_general_ci;```
-  * ```GRANT ALL ON amon.* TO 'amon_user'@'%' IDENTIFIED BY 'amon_password';```
+  * ```sql
+    CREATE DATABASE amon DEFAULT CHARACTER SET utf8 DEFAULT COLLATE utf8_general_ci;
+    ```
+  * ```sql
+    GRANT ALL ON amon.* TO 'amon_user'@'%' IDENTIFIED BY 'amon_password';
+    ```
 
 For Reports Manager:
-  * ```CREATE DATABASE rman DEFAULT CHARACTER SET utf8 DEFAULT COLLATE utf8_general_ci;```
-  * ```GRANT ALL ON rman.* TO 'rman_user'@'%' IDENTIFIED BY 'rman_password';```
+  * ```sql
+    CREATE DATABASE rman DEFAULT CHARACTER SET utf8 DEFAULT COLLATE utf8_general_ci;
+    ```
+  * ```sql
+    GRANT ALL ON rman.* TO 'rman_user'@'%' IDENTIFIED BY 'rman_password';
+    ```
 
 For Hue:
-  * ```CREATE DATABASE hue DEFAULT CHARACTER SET utf8 DEFAULT COLLATE utf8_general_ci;```
-  * ```GRANT ALL ON hue.* TO 'hue_user'@'%' IDENTIFIED BY 'hue_password';```
+  * ```sql
+    CREATE DATABASE hue DEFAULT CHARACTER SET utf8 DEFAULT COLLATE utf8_general_ci;
+    ```
+  * ```sql
+    GRANT ALL ON hue.* TO 'hue_user'@'%' IDENTIFIED BY 'hue_password';
+    ```
 
 For Hive Metastore Server:
-  * ```CREATE DATABASE metastore DEFAULT CHARACTER SET utf8 DEFAULT COLLATE utf8_general_ci;```
-  * ```GRANT ALL ON metastore.* TO 'hive_user'@'%' IDENTIFIED BY 'hive_password';```
+  * ```sql
+    CREATE DATABASE metastore DEFAULT CHARACTER SET utf8 DEFAULT COLLATE utf8_general_ci;
+    ```
+  * ```sql
+    GRANT ALL ON metastore.* TO 'hive_user'@'%' IDENTIFIED BY 'hive_password';
+    ```
 
 For Sentry Server:
-  * ```CREATE DATABASE sentry DEFAULT CHARACTER SET utf8 DEFAULT COLLATE utf8_general_ci;```
-  * ```GRANT ALL ON sentry.* TO 'sentry_user'@'%' IDENTIFIED BY 'sentry_password';```
+  * ```sql
+    CREATE DATABASE sentry DEFAULT CHARACTER SET utf8 DEFAULT COLLATE utf8_general_ci;
+    ```
+  * ```sql
+    GRANT ALL ON sentry.* TO 'sentry_user'@'%' IDENTIFIED BY 'sentry_password';
+    ```
 
 For Cloudera Navigator Audit Server:
-  * ```CREATE DATABASE nav DEFAULT CHARACTER SET utf8 DEFAULT COLLATE utf8_general_ci;```
-  * ```GRANT ALL ON nav.* TO 'nav_user'@'%' IDENTIFIED BY 'nav_password';```
+  * ```sql
+    CREATE DATABASE nav DEFAULT CHARACTER SET utf8 DEFAULT COLLATE utf8_general_ci;
+    ```
+  * ```sql
+    GRANT ALL ON nav.* TO 'nav_user'@'%' IDENTIFIED BY 'nav_password';
+    ```
 
 For Cloudera Navigator Metadata Server:
-  * ```CREATE DATABASE navms DEFAULT CHARACTER SET utf8 DEFAULT COLLATE utf8_general_ci;```
-  * ```GRANT ALL ON navms.* TO 'navms_user'@'%' IDENTIFIED BY 'navms_password';```
+  * ```sql
+    CREATE DATABASE navms DEFAULT CHARACTER SET utf8 DEFAULT COLLATE utf8_general_ci;
+    ```
+  * ```sql
+    GRANT ALL ON navms.* TO 'navms_user'@'%' IDENTIFIED BY 'navms_password';
+    ```
 
 For Oozie:
-  * ```CREATE DATABASE oozie DEFAULT CHARACTER SET utf8 DEFAULT COLLATE utf8_general_ci;```
-  * ```GRANT ALL ON oozie.* TO 'oozie_user'@'%' IDENTIFIED BY 'oozie_password';```
+  * ```sql
+    CREATE DATABASE oozie DEFAULT CHARACTER SET utf8 DEFAULT COLLATE utf8_general_ci;
+    ```
+  * ```sql
+    GRANT ALL ON oozie.* TO 'oozie_user'@'%' IDENTIFIED BY 'oozie_password';
+    ```
 
+Apply permissions:
+
+* ```sql
+  FLUSH PRIVILEGES;
+  ```
+ 
 Check all databases:
-  * ```SHOW DATABASES;```
+
+* ```sql
+  SHOW DATABASES;
+  ```
