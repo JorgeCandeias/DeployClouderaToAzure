@@ -463,92 +463,123 @@ On **Cloudera-MySQL**:
 ### Create Databases for Cloudera Software
 
 On **Cloudera-MySQL**:
-  * Log on to the MySQL command prompt:
-    ```bash
-    mysql -u root -p
-    ```
-  * Enter your MySQL password.
+
+Log on to the MySQL command prompt:
+```bash
+mysql -u root -p
+```
+Enter your MySQL password.
 
 For Cloudera Manager Server:
-  * ```sql
-    CREATE DATABASE scm DEFAULT CHARACTER SET utf8 DEFAULT COLLATE utf8_general_ci;
-    ```
-  * ```sql
-    GRANT ALL ON scm.* TO 'scm_user'@'%' IDENTIFIED BY 'scm_password';
-    ```
+```sql
+CREATE DATABASE scm DEFAULT CHARACTER SET utf8 DEFAULT COLLATE utf8_general_ci;
+```
+```sql
+GRANT ALL ON scm.* TO 'scm_user'@'%' IDENTIFIED BY 'scm_password';
+```
 
 For Activity Monitor:
-  * ```sql
-    CREATE DATABASE amon DEFAULT CHARACTER SET utf8 DEFAULT COLLATE utf8_general_ci;
-    ```
-  * ```sql
-    GRANT ALL ON amon.* TO 'amon_user'@'%' IDENTIFIED BY 'amon_password';
-    ```
+```sql
+CREATE DATABASE amon DEFAULT CHARACTER SET utf8 DEFAULT COLLATE utf8_general_ci;
+```
+```sql
+GRANT ALL ON amon.* TO 'amon_user'@'%' IDENTIFIED BY 'amon_password';
+```
 
 For Reports Manager:
-  * ```sql
-    CREATE DATABASE rman DEFAULT CHARACTER SET utf8 DEFAULT COLLATE utf8_general_ci;
-    ```
-  * ```sql
-    GRANT ALL ON rman.* TO 'rman_user'@'%' IDENTIFIED BY 'rman_password';
-    ```
+```sql
+CREATE DATABASE rman DEFAULT CHARACTER SET utf8 DEFAULT COLLATE utf8_general_ci;
+```
+```sql
+GRANT ALL ON rman.* TO 'rman_user'@'%' IDENTIFIED BY 'rman_password';
+```
 
 For Hue:
-  * ```sql
-    CREATE DATABASE hue DEFAULT CHARACTER SET utf8 DEFAULT COLLATE utf8_general_ci;
-    ```
-  * ```sql
-    GRANT ALL ON hue.* TO 'hue_user'@'%' IDENTIFIED BY 'hue_password';
-    ```
+```sql
+CREATE DATABASE hue DEFAULT CHARACTER SET utf8 DEFAULT COLLATE utf8_general_ci;
+```
+```sql
+GRANT ALL ON hue.* TO 'hue_user'@'%' IDENTIFIED BY 'hue_password';
+```
 
 For Hive Metastore Server:
-  * ```sql
-    CREATE DATABASE metastore DEFAULT CHARACTER SET utf8 DEFAULT COLLATE utf8_general_ci;
-    ```
-  * ```sql
-    GRANT ALL ON metastore.* TO 'hive_user'@'%' IDENTIFIED BY 'hive_password';
-    ```
+```sql
+CREATE DATABASE metastore DEFAULT CHARACTER SET utf8 DEFAULT COLLATE utf8_general_ci;
+```
+```sql
+GRANT ALL ON metastore.* TO 'hive_user'@'%' IDENTIFIED BY 'hive_password';
+```
 
 For Sentry Server:
-  * ```sql
-    CREATE DATABASE sentry DEFAULT CHARACTER SET utf8 DEFAULT COLLATE utf8_general_ci;
-    ```
-  * ```sql
-    GRANT ALL ON sentry.* TO 'sentry_user'@'%' IDENTIFIED BY 'sentry_password';
-    ```
+```sql
+CREATE DATABASE sentry DEFAULT CHARACTER SET utf8 DEFAULT COLLATE utf8_general_ci;
+```
+```sql
+GRANT ALL ON sentry.* TO 'sentry_user'@'%' IDENTIFIED BY 'sentry_password';
+```
 
 For Cloudera Navigator Audit Server:
-  * ```sql
-    CREATE DATABASE nav DEFAULT CHARACTER SET utf8 DEFAULT COLLATE utf8_general_ci;
-    ```
-  * ```sql
-    GRANT ALL ON nav.* TO 'nav_user'@'%' IDENTIFIED BY 'nav_password';
-    ```
+```sql
+CREATE DATABASE nav DEFAULT CHARACTER SET utf8 DEFAULT COLLATE utf8_general_ci;
+```
+```sql
+GRANT ALL ON nav.* TO 'nav_user'@'%' IDENTIFIED BY 'nav_password';
+```
 
 For Cloudera Navigator Metadata Server:
-  * ```sql
-    CREATE DATABASE navms DEFAULT CHARACTER SET utf8 DEFAULT COLLATE utf8_general_ci;
-    ```
-  * ```sql
-    GRANT ALL ON navms.* TO 'navms_user'@'%' IDENTIFIED BY 'navms_password';
-    ```
+```sql
+CREATE DATABASE navms DEFAULT CHARACTER SET utf8 DEFAULT COLLATE utf8_general_ci;
+```
+```sql
+GRANT ALL ON navms.* TO 'navms_user'@'%' IDENTIFIED BY 'navms_password';
+```
 
 For Oozie:
-  * ```sql
-    CREATE DATABASE oozie DEFAULT CHARACTER SET utf8 DEFAULT COLLATE utf8_general_ci;
-    ```
-  * ```sql
-    GRANT ALL ON oozie.* TO 'oozie_user'@'%' IDENTIFIED BY 'oozie_password';
-    ```
+```sql
+CREATE DATABASE oozie DEFAULT CHARACTER SET utf8 DEFAULT COLLATE utf8_general_ci;
+```
+```sql
+GRANT ALL ON oozie.* TO 'oozie_user'@'%' IDENTIFIED BY 'oozie_password';
+```
 
 Apply permissions:
 
-* ```sql
-  FLUSH PRIVILEGES;
-  ```
+```sql
+FLUSH PRIVILEGES;
+```
  
 Check all databases:
 
-* ```sql
-  SHOW DATABASES;
-  ```
+```sql
+SHOW DATABASES;
+```
+
+## Create Cloudera Manager Virtual Machine
+
+Create a Virtual Machine on Azure with the following attributes:
+
+* Type: **Cloudera CentOS 7.4** (at time of writing - choose a newer one if available)
+* Basics:
+  * Name: **Cloudera-Manager**
+  * VM Disk Type: **SSD**
+  * Username: **cloudera**
+  * Authentication Type: **SSH Public Key**
+  * SSH Public Key: Your SSH Public Key
+  * Subscription: Same as Resource Group
+  * Resource Group: **ClouderaOnAzure**
+* Size: General Purpose. Min 2 VCPUs + 8GB RAM.
+* Settings:
+  * Availability Set: **ClouderaOnAzure-AvailabilitySet-ClouderaManager**
+  * Use Managed Disks: **Yes**
+  * Virtual Network: **ClouderaOnAzure-VirtualNetwork**
+  * Subnet: **ClouderaOnAzure-SubNet-ClouderaManager**
+  * Public IP Address: Default (New)
+  * Network Security Group: **Advanced**
+  * Network Security Group (Firewall): **ClouderaOnAzure-NetworkSecurityGroup-ClouderaManager**
+
+## Deploy Cloudera Manager
+
+Links:
+
+* [Installing Cloudera Manager, CDH, and Managed Services](https://www.cloudera.com/documentation/enterprise/latest/topics/install_cm_cdh.html)
+
