@@ -604,44 +604,104 @@ Create a Virtual Machine on Azure with the following attributes:
   * Network Security Group: **Advanced**
   * Network Security Group (Firewall): **ClouderaOnAzure-NetworkSecurityGroup-ClouderaManager**
 
-## Deploy Cloudera Manager
+### Configure DNS Client
 
 Links:
+
+* [Cloudera Azure DNS Scripts](https://github.com/cloudera/director-scripts/tree/master/azure-dns-scripts)
+
+Steps:
+
+1. Connect to **Cloudera-Manager** via SSH.
+2. Download the DNS Client Setup Script for CentOS 7.x from the link above.
+```bash
+wget https://raw.githubusercontent.com/cloudera/director-scripts/master/azure-dns-scripts/bootstrap_dns_nm.sh
+```
+3. Make the script executable.
+```bash
+chmod +x bootstrap_dns_nm.sh
+```
+4. Execute the script.
+```bash
+sudo ./bootstrap_dns_nm.sh
+```
+5. Verify
+```bash
+hostname --fqdn
+hostname --ip-address
+```
+
+## Deploy Cloudera Manager
+
+### Links:
 
 * [Installing Cloudera Manager, CDH, and Managed Services](https://www.cloudera.com/documentation/enterprise/latest/topics/install_cm_cdh.html)
 * [Cloudera Manager Version and Download Information](https://www.cloudera.com/documentation/enterprise/release-notes/topics/cm_vd.html)
 * [Install Java Development Kit](https://www.cloudera.com/documentation/enterprise/latest/topics/cdh_ig_jdk_installation.html)
 * [Install Cloudera Manager Server](https://www.cloudera.com/documentation/enterprise/latest/topics/install_cm_server.html)
+* [Installing the MySQL JDBC Driver](https://www.cloudera.com/documentation/enterprise/latest/topics/cm_ig_mysql.html#cmig_topic_5_5_3)
 * [Set up the Cloudera Manager Database](https://www.cloudera.com/documentation/enterprise/latest/topics/prepare_cm_database.html)
 
 
-Steps:
+### Configure Repository:
 
-1. Go to the [Cloudera Manager Version and Download Information](https://www.cloudera.com/documentation/enterprise/release-notes/topics/cm_vd.html) and locate the the **Repo File** link for the version of CentOS you are using. At the time of writing, this is CentOS 7.
-2. Copy the repo file link.
-3. Connect to your **Cloudera-Manager** VM via SSH.
-4. Download the repo file to the yum repos folder using wget. For example:
+* Go to the [Cloudera Manager Version and Download Information](https://www.cloudera.com/documentation/enterprise/release-notes/topics/cm_vd.html) and locate the the **Repo File** link for the version of CentOS you are using. At the time of writing, this is CentOS 7.
+* Copy the repo file link.
+* Connect to your **Cloudera-Manager** VM via SSH.
+* Download the repo file to the yum repos folder using wget. For example:
 ```bash
 sudo wget https://archive.cloudera.com/cm5/redhat/7/x86_64/cm/cloudera-manager.repo -P /etc/yum.repos.d/
 ```
-5. Inspect the downloaded repo file. This file describes the repository urls where the operating system can download and update the Cloudera packages from.
+* Inspect the downloaded repo file. This file describes the repository urls where the operating system can download and update the Cloudera packages from.
 ```bash
 cat /etc/yum.repos.d/cloudera-manager.repo
 ```
-6. Import the Repository Signing GPG key for your version of CentOS. For CentOS 7.x, use the command below. For others, check the links above.
+* Import the Repository Signing GPG key for your version of CentOS. For CentOS 7.x, use the command below. For others, check the links above.
 ```bash
 sudo rpm --import https://archive.cloudera.com/cdh5/redhat/7/x86_64/cdh/RPM-GPG-KEY-cloudera
 ```
-7. Install Java Development Kit:
+
+### Install Java Development Kit:
+
 ```bash
 sudo yum install oracle-j2sdk1.7
 ```
-8. Install Cloudera Manager Server:
+
+Install MySQL JDBC Driver:
+
+* On your own computer, go to the [MySQL Connector/J download page](https://dev.mysql.com/downloads/connector/j/5.1.html) and try to download the tar.gz files.
+* On the confirmation page, locate the *no thanks, just start my dowload* link and copy it.
+* Connect to **Cloudera-Manager** via SSH.
+* Download the copied link:
+```bash
+wget https://dev.mysql.com/get/Downloads/Connector-J/mysql-connector-java-5.1.46.tar.gz
+```
+* Extract the driver files.
+```bash
+tar zxvf mysql-connector-java-5.1.46.tar.gz
+```
+* Create a new shared folder for the driver.
+```bash
+sudo mkdir -p /usr/share/java/
+```
+* Navigate to the extracted driver folder.
+```bash
+cd mysql-connector-java-5.1.46
+```
+* Copy the downloaded driver into the shared folder.
+```bash
+sudo cp mysql-connector-java-5.1.46-bin.jar /usr/share/java/mysql-connector-java.jar
+```
+
+### Install Cloudera Manager Server:
+
+* Install the Cloudera daemons.
+
 ```bash
 sudo yum install cloudera-manager-daemons cloudera-manager-server
 ```
-9. Configure Coudera Manager to use **Cloudera-MySQL**'s MySQL as the backing database server.
-```bash
-sudo /usr/share/cmf/schema/scm_prepare_database.sh mysql scm scm_user scm_password
 
+* Tell Cloudera Manager to use **Cloudera-MySQL** as the backing database server. Replace parameters with those applicable for your cluster. If you omit the password parameter, the script will ask it at runtime.
+```bash
+sudo /usr/share/cmf/schema/scm_prepare_database.sh mysql -h Cloudera-MySQL.cloudera --scm-host Cloudera-Manager.cloudera scm scm_user scm_password
 ```
