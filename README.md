@@ -727,7 +727,7 @@ INFO WebServerImpl:com.cloudera.server.cmf.WebServerImpl: Started Jetty server.
 
 > **Warning:** This step exposes a virtual machine network port on the public network and therefore provides an attack surface. Only do this if you are deploying a short-lived test cluster for your own self-study and you are not using any confidential data. For long-lived clusters in corporate environments, make sure to use a private connection as described in the [Azure Virtual Networks Overview](https://docs.microsoft.com/en-us/azure/virtual-network/virtual-networks-overview#communicate-with-on-premises-resources).
 
-* On the Azure portal, open Network Security Group **ClouderaOnAzure-NetworkSecurityGroup-ClouderaManager**.
+* On the Azure Portal, open Network Security Group **ClouderaOnAzure-NetworkSecurityGroup-ClouderaManager**.
 * Open tab **Inbound security rules**.
 * Click **Add*.
 * Add a rule with the following parameters:
@@ -738,3 +738,13 @@ INFO WebServerImpl:com.cloudera.server.cmf.WebServerImpl: Started Jetty server.
   * Action: **Allow**
   * Priority: **111**
   * Name: **Inbound-ClouderaManager-7180**
+  
+### Access Cloudera Manager Server
+
+* On the Azure Portal, open VM **Cloudera-Manager**.
+* If you haven't done so yet, configure a DNS name for the VM.
+* On your own computer, browse to the VM address on port 7180
+```
+http://<your_cloudera_manager_dns_name>:7180
+```
+* Enter the default username and password: admin/admin.
