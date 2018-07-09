@@ -641,6 +641,7 @@ hostname --ip-address
 * [Install Cloudera Manager Server](https://www.cloudera.com/documentation/enterprise/latest/topics/install_cm_server.html)
 * [Installing the MySQL JDBC Driver](https://www.cloudera.com/documentation/enterprise/latest/topics/cm_ig_mysql.html#cmig_topic_5_5_3)
 * [Set up the Cloudera Manager Database](https://www.cloudera.com/documentation/enterprise/latest/topics/prepare_cm_database.html)
+* [Troubleshooting Installation Problems](https://www.cloudera.com/documentation/enterprise/latest/topics/cm_ig_troubleshooting.html)
 
 
 ### Configure Repository:
@@ -721,3 +722,19 @@ sudo tail -f /var/log/cloudera-scm-server/cloudera-scm-server.log
 ```
 INFO WebServerImpl:com.cloudera.server.cmf.WebServerImpl: Started Jetty server.
 ```
+
+### Optional: Configure Cloudera Manager Server Public Access
+
+> **Warning:** This step exposes a virtual machine network port on the public network and therefore provides an attack surface. Only do this if you are deploying a short-lived test cluster for your own self-study and you are not using any confidential data. For long-lived clusters in corporate environments, make sure to use a private connection as described in the [Azure Virtual Networks Overview](https://docs.microsoft.com/en-us/azure/virtual-network/virtual-networks-overview#communicate-with-on-premises-resources).
+
+* On the Azure portal, open Network Security Group **ClouderaOnAzure-NetworkSecurityGroup-ClouderaManager**.
+* Open tab **Inbound security rules**.
+* Click **Add*.
+* Add a rule with the following parameters:
+  * Source: **Any**
+  * Source port ranges: **\***
+  * Destination port ranges: **7180**
+  * Protocol: **Any**
+  * Action: **Allow**
+  * Priority: **111**
+  * Name: **Inbound-ClouderaManager-7180**
