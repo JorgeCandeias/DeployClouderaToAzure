@@ -384,7 +384,7 @@ Install BIND:
 
 * Type: **Cloudera CentOS 7.4** (at time of writing - choose a newer one if available)
 * Basics:
-  * Name: **Cloudera-DNS**
+  * Name: **Cloudera-MySQL**
   * VM Disk Type: **SSD**
   * Username: **cloudera**
   * Authentication Type: **SSH Public Key**
@@ -400,6 +400,33 @@ Install BIND:
   * Public IP Address: Default (New)
   * Network Security Group: **Advanced**
   * Network Security Group (Firewall): **ClouderaOnAzure-NetworkSecurityGroup-ClouderaManager**
+
+### Configure DNS Client
+
+Links:
+
+* [Cloudera Azure DNS Scripts](https://github.com/cloudera/director-scripts/tree/master/azure-dns-scripts)
+
+Steps:
+
+1. Connect to **Cloudera-MySQL** via SSH.
+2. Download the DNS Client Setup Script for CentOS 7.x from the link above.
+```bash
+wget https://raw.githubusercontent.com/cloudera/director-scripts/master/azure-dns-scripts/bootstrap_dns_nm.sh
+```
+3. Make the script executable.
+```bash
+chmod +x bootstrap_dns_nm.sh
+```
+4. Execute the script.
+```bash
+sudo ./bootstrap_dns_nm.sh
+```
+5. Verify
+```bash
+hostname --fqdn
+hostname --ip-address
+```
 
 ### Install MySQL Server:
 
@@ -582,4 +609,39 @@ Create a Virtual Machine on Azure with the following attributes:
 Links:
 
 * [Installing Cloudera Manager, CDH, and Managed Services](https://www.cloudera.com/documentation/enterprise/latest/topics/install_cm_cdh.html)
+* [Cloudera Manager Version and Download Information](https://www.cloudera.com/documentation/enterprise/release-notes/topics/cm_vd.html)
+* [Install Java Development Kit](https://www.cloudera.com/documentation/enterprise/latest/topics/cdh_ig_jdk_installation.html)
+* [Install Cloudera Manager Server](https://www.cloudera.com/documentation/enterprise/latest/topics/install_cm_server.html)
+* [Set up the Cloudera Manager Database](https://www.cloudera.com/documentation/enterprise/latest/topics/prepare_cm_database.html)
 
+
+Steps:
+
+1. Go to the [Cloudera Manager Version and Download Information](https://www.cloudera.com/documentation/enterprise/release-notes/topics/cm_vd.html) and locate the the **Repo File** link for the version of CentOS you are using. At the time of writing, this is CentOS 7.
+2. Copy the repo file link.
+3. Connect to your **Cloudera-Manager** VM via SSH.
+4. Download the repo file to the yum repos folder using wget. For example:
+```bash
+sudo wget https://archive.cloudera.com/cm5/redhat/7/x86_64/cm/cloudera-manager.repo -P /etc/yum.repos.d/
+```
+5. Inspect the downloaded repo file. This file describes the repository urls where the operating system can download and update the Cloudera packages from.
+```bash
+cat /etc/yum.repos.d/cloudera-manager.repo
+```
+6. Import the Repository Signing GPG key for your version of CentOS. For CentOS 7.x, use the command below. For others, check the links above.
+```bash
+sudo rpm --import https://archive.cloudera.com/cdh5/redhat/7/x86_64/cdh/RPM-GPG-KEY-cloudera
+```
+7. Install Java Development Kit:
+```bash
+sudo yum install oracle-j2sdk1.7
+```
+8. Install Cloudera Manager Server:
+```bash
+sudo yum install cloudera-manager-daemons cloudera-manager-server
+```
+9. Configure Coudera Manager to use **Cloudera-MySQL**'s MySQL as the backing database server.
+```bash
+sudo /usr/share/cmf/schema/scm_prepare_database.sh mysql scm scm_user scm_password
+
+```
