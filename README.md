@@ -705,3 +705,19 @@ sudo yum install cloudera-manager-daemons cloudera-manager-server
 ```bash
 sudo /usr/share/cmf/schema/scm_prepare_database.sh mysql -h Cloudera-MySQL.cloudera --scm-host Cloudera-Manager.cloudera scm scm_user scm_password
 ```
+
+* Start the Server:
+
+```bash
+sudo systemctl start cloudera-scm-server
+```
+
+* Monitor the startup process by tailing the service log. It may take a few minutes to complete for the first time.
+```bash
+sudo tail -f /var/log/cloudera-scm-server/cloudera-scm-server.log
+```
+
+* You will know the service has started once you see this message in the log.
+```
+INFO WebServerImpl:com.cloudera.server.cmf.WebServerImpl: Started Jetty server.
+```
